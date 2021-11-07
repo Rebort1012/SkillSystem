@@ -80,27 +80,6 @@ public class GameObjectPool : SingletonMono<GameObjectPool>
         return tempGo;
     }
 
-    public GameObject CreateObject(string key, string path, Transform parent)
-    {
-        //先找是否有可用的，如果没有则创建，如果有找到后设置好位置，朝向再返回
-        GameObject tempGo = FindUsable(key);
-        if (tempGo != null)
-        {
-            tempGo.transform.SetParent(parent);
-            tempGo.transform.localPosition = Vector3.zero;   
-            tempGo.SetActive(true);
-        }
-        else
-        {
-            GameObject go = GetTemplate(path);
-            tempGo = GameObject.Instantiate(go, parent);
-            tempGo.transform.localPosition = Vector3.zero;   
-            Add(key, tempGo);
-        }
-        
-        return tempGo;
-    }
-    
     /// <summary>清空某类游戏对象</summary>
     public void Clear(string key)
     {

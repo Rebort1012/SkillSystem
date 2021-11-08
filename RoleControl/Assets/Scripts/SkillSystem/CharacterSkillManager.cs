@@ -65,8 +65,12 @@ public class CharacterSkillManager : MonoBehaviour
     {
         GameObject tempGo = null;
         //创建技能预制体+创建位置的偏移
-        tempGo = GameObjectPool.I.CreateObject(skillData.skill.prefabName, skillData.skillPrefab, 
-            transform.position + transform.forward.normalized * skillData.skill.fxOffset, transform.rotation);
+        if ((skillData.skill.damageType & DamageType.FxOffset) == DamageType.FxOffset)
+            tempGo = GameObjectPool.I.CreateObject(skillData.skill.prefabName, skillData.skillPrefab,
+                transform.position + transform.forward * skillData.skill.fxOffset, transform.rotation);
+        else if ((skillData.skill.damageType & DamageType.FirePos) == DamageType.FirePos)
+            tempGo = GameObjectPool.I.CreateObject(skillData.skill.prefabName, skillData.skillPrefab,
+                chStatus.FirePos.position, chStatus.FirePos.rotation);
         
         //从预制体对象上找到技能释放对象 
         var deployer = tempGo.GetComponent<SkillDeployer>();

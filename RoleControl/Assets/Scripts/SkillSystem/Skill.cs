@@ -43,6 +43,7 @@ public enum BuffType
     BeatBack = 64,      //击退
     BeatUp = 128,       //击飞
     Pull = 256,         //拉拽
+    AddDefence = 512
 }
 
 /// <summary>
@@ -54,7 +55,11 @@ public enum DamageType
     Bullet = 4,             //特效粒子碰撞伤害
     None = 8,               //无伤害，
     Anima = 64,             //动画帧判定伤害
-    
+    Buff = 16,
+    DeBuff = 32,
+    FirePos = 128,
+    FxOffset = 256,
+
     //DamageOnce = 128,       //单次伤害    伤害间隔和CD相同即为单次伤害
     //DamageMult = 512,       //多次伤害
     

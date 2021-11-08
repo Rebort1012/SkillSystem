@@ -54,9 +54,9 @@ public class CharacterSkillSystem : MonoBehaviour
                     //目标选中指示的显隐
                     if (currentSelectedTarget != null)
                         //修改成获取characterStatus中的Selected节点设置隐藏；
-                        TransformHelper.FindChild(currentSelectedTarget,"Selected").GetComponent<Renderer>().enabled = false;
+                        currentSelectedTarget.GetComponent<CharacterStatus>().selected.SetActive(false);
                     currentSelectedTarget = selectedTaget.transform;
-                    TransformHelper.FindChild(currentSelectedTarget, "Selected").GetComponent<Renderer>().enabled = true;
+                    currentSelectedTarget.GetComponent<CharacterStatus>().selected.SetActive(true);
                     //转向目标
                     //transform.LookAt(currentSelectedTarget);
                     chSkillMgr.DeploySkill(currentUseSkill);

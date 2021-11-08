@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_Distortion_02
+  m_Shader: {fileID: 4800000, guid: 8b4639ccbe96a334295b96604f7b8e44, type: 3}
+  m_ShaderKeywords: _DISTORTION_ON
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: f53e3faab7a2b7e458f22c0d5a7a25b6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalDistortion:
+        m_Texture: {fileID: 2800000, guid: f53e3faab7a2b7e458f22c0d5a7a25b6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalDistortion1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 2800000, guid: 2faeb8d5e730dfc4d9da68267901f22a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OpacityMask:
+        m_Texture: {fileID: 2800000, guid: f1bcf53d393a2d24d82d16f5090c2ed7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: 511b6c71a80da4a4186ad4806ce410fa, type: 3}
+        m_Scale: {x: 0, y: 0}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _AlphaPower: 0.2
+    - _Amount: 0.2
+    - _BumpScale: 1
+    - _ClipValue: 1
+    - _CullMode: 2
+    - _CustomAB: 0
+    - _Cutoff: 0.5
+    - _DIstortion: 1
+    - _DepthFadeDistance: 1
+    - _DepthScale: 4
+    - _DetailNormalMapScale: 1
+    - _Dist: 10
+    - _DistorsionAmount: 0.331
+    - _DistorsionAmount1: 0.039
+    - _DistortPower: 1
+    - _DistortionAmount: 0.1
+    - _DistortionPower: 1
+    - _DistortionScale: 1
+    - _DoubleAlpha: 0
+    - _DoubleTexture: 0
+    - _DstBlend: 0
+    - _Emissive: 1
+    - _Erosion: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _InvFade: 3
+    - _MaskPower: 1
+    - _Max: 1
+    - _Metallic: 0
+    - _Min: 0
+    - _Mode: 0
+    - _MultiplyDistort: 0.2
+    - _MultiplyDistort1: 1
+    - _NoiseTiling: 1
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _Src: 5
+    - _SrcBlend: 1
+    - _TextureOpacity: 1
+    - _TexturePower: 1
+    - _Tiling: 1
+    - _Tiling1: 1
+    - _UVSec: 0
+    - _ZWrite: 1
+    - __dirty: 0
+    m_Colors:
+    - _AlphaSpeed: {r: -1, g: 0, b: -2, a: 0}
+    - _AlphaTiling: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DistortionSpeed: {r: 1, g: 1, b: 1, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Speed: {r: 1, g: 1, b: 0, a: 0}
+    - _Speed1: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _TextureSpeed: {r: -2, g: 0, b: -1, a: 0}
+    - _TextureTiling: {r: 1, g: 1, b: 1, a: 1}
+    - _TilingandOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _TintColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
+  m_BuildTextureStacks: []

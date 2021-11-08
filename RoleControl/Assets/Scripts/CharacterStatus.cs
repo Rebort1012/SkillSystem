@@ -25,7 +25,11 @@ public class CharacterStatus : MonoBehaviour
     /// <summary>受击特效挂点 挂点名为HitFxPos </summary>
     [HideInInspector]
     public Transform HitFxPos;
-
+    [HideInInspector]
+    public Transform FirePos;
+    
+    public GameObject selected;
+    
     [HideInInspector]
     public float normalAtt;
     /// <summary>Buff列表 </summary>

@@ -24,10 +24,8 @@ public class CharacterSkillManager : MonoBehaviour
         {
             //动态加载技能特效预制体  //Resources/Skill -- 技能特效预制体 
             if (item.skillPrefab == null && !string.IsNullOrEmpty(item.skill.prefabName))
-            {
-                if(item.skill.prefabName != "FX_Fire_Projectile") 
-                    item.skillPrefab = LoadFxPrefab("Prefabs/Skill/" + item.skill.prefabName);
-            }
+                item.skillPrefab = LoadFxPrefab("Prefabs/Skill/" + item.skill.prefabName);
+            
             //Resources/Skill/HitFx     技能伤害特效预制体
             if (item.hitFxPrefab == null && !string.IsNullOrEmpty(item.skill.hitFxName))
                 item.hitFxPrefab = LoadFxPrefab("Prefabs/Skill/" + item.skill.hitFxName);
@@ -66,32 +64,25 @@ public class CharacterSkillManager : MonoBehaviour
     public void DeploySkill(SkillData skillData)
     {
         GameObject tempGo = null;
-        //创建技能预制体
-        if (skillData.skill.prefabName != "FX_Fire_Projectile") 
-            tempGo = GameObjectPool.I.CreateObject(skillData.skill.prefabName, skillData.skillPrefab,
-                transform.position, transform.rotation);
-        else
-        { 
-            GameObject temp = Resources.Load<GameObject>("Prefabs/Skill/FX_Fire_Projectile");
-            tempGo = Instantiate<GameObject>(temp);
-            tempGo.transform.position = transform.position;
-            tempGo.transform.rotation = transform.rotation;
-        }
-
+        //创建技能预制体+创建位置的偏移
+        tempGo = GameObjectPool.I.CreateObject(skillData.skill.prefabName, skillData.skillPrefab, 
+            transform.position + transform.forward.normalized * skillData.skill.fxOffset, transform.rotation);
+        
         //从预制体对象上找到技能释放对象 
         var deployer = tempGo.GetComponent<SkillDeployer>();
         if (deployer == null)
             deployer = tempGo.AddComponent<SkillDeployer>();
-        
+
         //设置要释放的技能
         deployer.skillData = skillData;
         //调用释放方法
         deployer.DeploySkill();
 
         //技能持续时间过后，技能要销毁
-        if (skillData.skill.durationTime > 0 && skillData.skill.skillID != 10)
+        if (skillData.skill.durationTime > 0)
             GameObjectPool.I.Destory(tempGo, skillData.skill.durationTime);
-        //GameObjectPool.I.MyDestory(tempGo, 0.5f);
+        else
+            GameObjectPool.I.Destory(tempGo, 0.5f);
 
         //开始冷却计时
         StartCoroutine(CoolTimeDown(skillData));

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class CharacterStatus : MonoBehaviour
 {
-    //区分boss和其他
-    public string tag;
     /// <summary>生命 </summary>
     public int HP = 100;
     /// <summary>生命 </summary>
@@ -16,9 +14,9 @@ public class CharacterStatus : MonoBehaviour
     public int MaxSP =100;
     /// <summary>伤害基数</summary>
     public float damage = 100;
-    //命中
+    ///<summary>命中</summary>
     public float hitRate = 1;
-    //闪避
+    ///<summary>闪避</summary>
     public float dodgeRate = 1;
     /// <summary>防御</summary>  
     public float defence = 10f;

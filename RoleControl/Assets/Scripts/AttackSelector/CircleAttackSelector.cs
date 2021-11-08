@@ -21,15 +21,26 @@ class CircleAttackSelector : IAttackSelector
 
         GameObject[] targets = null;
         //根据技能是单体还是群攻，决定返回多少敌人对象
-        if (skillData.skill.attackType == SkillAttackType.Single)
+        if (skillData.skill.attackNum == 1)
         {
             //将所有的敌人，按与技能的发出者之间的距离升序排列，
             CollectionHelper.OrderBy<GameObject, float>(array,
                 p => Vector3.Distance(skillData.Owner.transform.position, p.transform.position));
             targets = new GameObject[] {array[0]};
         }
-        else if (skillData.skill.attackType == SkillAttackType.Group)
-            targets = array;
+        else
+        {
+            int attNum = skillData.skill.attackNum;
+            if (attNum >= array.Length)
+                targets = array;
+            else
+            {
+                for (int i = 0; i < attNum; i++)
+                {
+                    targets[i] = array[i];
+                }
+            }
+        }
 
         return targets;
     }

@@ -20,13 +20,13 @@ public enum SkillAttackType
 public enum DamageMode
 {
     /// <summary>圆形区</summary>                  
-    Circle = 1,
+    Circle = 4096,
 
     /// <summary>扇形区 </summary>
-    Sector = 2,
+    Sector = 8192,
 
     /// <summary>线性</summary>
-    Line = 3,
+    Line = 16384,
 }
 
 /// <summary>
@@ -52,17 +52,19 @@ public enum DamageType
 {
     JustInTime = 2,         //直接判定伤害
     Bullet = 4,             //特效粒子碰撞伤害
+    None = 8,               //无伤害，
     Anima = 64,             //动画帧判定伤害
     
-    DamageOnce = 128,       //单次伤害
-    DamageMult = 512,       //多次伤害
+    //DamageOnce = 128,       //单次伤害    伤害间隔和CD相同即为单次伤害
+    //DamageMult = 512,       //多次伤害
     
-    Single = 1024,          //单体
-    Group = 2048,           //群体伤害
-    
+    //Single = 1024,          //单体        记录伤害个数即可     
+    //Group = 2048,           //群体伤害
+        
     Circle = 4096,          //圈判定
-    Sector = 8192,          //选中判定
+    Sector = 8192,          //扇形判定
     Line = 16384,           //线性判定
+    Select = 16,            //选中才可释放
 }
 
 [Serializable]
@@ -80,17 +82,17 @@ public class Skill
     /// <summary>技能名称</summary>
     public string name;
 
-    /// <summary>伤害判定，粒子伤害，增益buff，减益buff，选中目标触发，动画帧判定</summary>>
+    /// <summary>技能类型，可用 | 拼接</summary>>
     public DamageType damageType;
     
-    /// <summary>攻击范围 线形，矩形，扇形，圆形，伤害选择器</summary>
-    public DamageMode damageMode;
-
-    /// <summary>持续时间</summary>
+    /// <summary>多次伤害持续时间</summary>
     public float durationTime;
     
     /// <summary>在持续时间内，两次伤害之间的间隔时间</summary>
     public float damageInterval;
+
+    /// <summary> 可以攻击敌人数量</summary>
+    public int attackNum;
 
     /// <summary>伤害比，挂钩英雄属性</summary>
     public float damageRatio;
@@ -104,17 +106,20 @@ public class Skill
     // <summary>魔法消耗</summary>
     public int costSP;
 
-    /// <summary>攻击距离</summary>
+    /// <summary>攻击距离，圆形和扇形判定半径，选中半圆半径，线性（矩形）长度</summary>
     public float attackDisntance;
+
+    /// <summary> 线性判定宽度<summary>
+    public float attackWidth;
+    
+    /// <summary>攻击扇形角度</summary>
+    public int attackAngle;
+    
+    /// <summary>伤害判定偏移距离，默认向人物前方偏移，粒子偏移距离</summary>
+    public float fxOffset;
 
     /// <summary>攻击目标的tag</summary>
     public string[] attckTargetTags;
-
-    /// <summary>攻击类型，单攻，群攻</summary>
-    public SkillAttackType attackType;
-
-    /// <summary>攻击扇形角度</summary>
-    public int attackAngle;
     
     /// <summary>攻击动画名称</summary>
     public string animtionName;
@@ -132,5 +137,8 @@ public class Skill
     public BuffType buffType;
 
     /// <summary>Buff持续时间</summary>
-    public float buffTime;
+    public float buffDuration;
+
+    /// <summary>Buff生效间隔时间</summary>
+    public float buffInterval;
 }

@@ -1,9 +1,3 @@
-RoleControl/Library
-RoleControl/Temp
-RoleControl/Logs
-RoleControl/.idea
-RoleControl/obj
-
 RoleControl/.idea/*
 RoleControl/Library/*
 RoleControl/Logs/*
@@ -13,4 +7,7 @@ RoleControl/Temp/*
 RoleControl/Packages/*
 RoleControl/Assembly-CSharp.csproj
 RoleControl/RoleControl.sln
+RoleControl/Assembly-CSharp-Editor.csproj
+RoleControl/Assembly-CSharp-Editor-firstpass.csproj
+RoleControl/Assembly-CSharp-firstpass.csproj
 

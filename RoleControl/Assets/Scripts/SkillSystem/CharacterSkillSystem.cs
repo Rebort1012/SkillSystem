@@ -45,10 +45,25 @@ public class CharacterSkillSystem : MonoBehaviour
         currentUseSkill = chSkillMgr.PrepareSkill(skillid);
         if (currentUseSkill != null)
         {
-            //攻击动画
-          
-            
-            DeploySkill();
+            //选中释放技能调用
+            if ((currentUseSkill.skill.damageType & DamageType.Select) == DamageType.Select)
+            {
+                var selectedTaget = SelectTarget();
+                if (selectedTaget != null)
+                {
+                    //目标选中指示的显隐
+                    if (currentSelectedTarget != null)
+                        //修改成获取characterStatus中的Selected节点设置隐藏；
+                        TransformHelper.FindChild(currentSelectedTarget,"Selected").GetComponent<Renderer>().enabled = false;
+                    currentSelectedTarget = selectedTaget.transform;
+                    TransformHelper.FindChild(currentSelectedTarget, "Selected").GetComponent<Renderer>().enabled = true;
+                    //转向目标
+                    //transform.LookAt(currentSelectedTarget);
+                    chSkillMgr.DeploySkill(currentUseSkill);
+                }
+            }
+            else
+                chSkillMgr.DeploySkill(currentUseSkill);
         }
     }
 
@@ -76,9 +91,12 @@ public class CharacterSkillSystem : MonoBehaviour
         //从碰撞体列表中挑出所有的敌人
         String[] attTags = currentUseSkill.skill.attckTargetTags;
         var array = CollectionHelper.Select<Collider, GameObject>(colliders, p => p.gameObject);
+       
+        //正前方，tag正确，血量大于0的敌人
         array = CollectionHelper.FindAll<GameObject>(array,
             p => Array.IndexOf(attTags, p.tag) >= 0
-                 && p.GetComponent<CharacterStatus>().HP > 0);
+                 && p.GetComponent<CharacterStatus>().HP > 0 &&
+                 Vector3.Angle(transform.forward, p.transform.position - transform.position) <= 90);
 
         if (array == null || array.Length == 0) return null;
 

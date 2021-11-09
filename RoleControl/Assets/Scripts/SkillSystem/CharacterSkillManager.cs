@@ -16,17 +16,23 @@ public class CharacterSkillManager : MonoBehaviour
     private CharacterStatus chStatus = null;
 
     private SkillData curSkill;
-    
+
+    private void AddSkill(string path)
+    {
+        SkillTemp skTemp = Instantiate(Resources.Load<SkillTemp>(path));
+        Skill sk = LoadSkill(skTemp);;
+        SkillData skd = new SkillData();
+        skd.skill = sk;
+        skills.Add(skd);
+    }
+
     //初始化技能数据(有什么技能)
     public void Start()
     {
         chStatus = GetComponent<CharacterStatus>();
         
-        SkillTemp skTemp = Instantiate(Resources.Load<SkillTemp>("Skill_1"));
-        Skill sk = LoadSkill(skTemp);;
-        SkillData skd = new SkillData();
-        skd.skill = sk;
-        skills.Add(skd);
+        AddSkill("Skill_1");
+        AddSkill("Skill_2");
         
         foreach (var item in skills)
         {

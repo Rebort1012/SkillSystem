@@ -54,11 +54,11 @@ public enum DamageType
     JustInTime = 2,         //直接判定伤害
     Bullet = 4,             //特效粒子碰撞伤害
     None = 8,               //无伤害，
-    Anima = 64,             //动画帧判定伤害
-    Buff = 16,
-    DeBuff = 32,
-    FirePos = 128,
-    FxOffset = 256,
+    Anima = 32,             //动画帧判定伤害
+    Buff = 64,
+    DeBuff = 128,
+    FirePos = 256,
+    FxOffset = 512,
 
     //DamageOnce = 128,       //单次伤害    伤害间隔和CD相同即为单次伤害
     //DamageMult = 512,       //多次伤害
@@ -66,10 +66,10 @@ public enum DamageType
     //Single = 1024,          //单体        记录伤害个数即可     
     //Group = 2048,           //群体伤害
         
-    Circle = 4096,          //圈判定
-    Sector = 8192,          //扇形判定
-    Line = 16384,           //线性判定
-    Select = 16,            //选中才可释放
+    Circle = 1024,          //圈判定
+    Sector = 2048,          //扇形判定
+    Line = 4096,           //线性判定
+    Select = 8192,            //选中才可释放
 }
 
 [Serializable]

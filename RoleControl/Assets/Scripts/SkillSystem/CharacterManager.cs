@@ -20,7 +20,11 @@ public class CharacterManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             css.AttackUseSkill(1);
-            //mAnimator.SetInteger("Attack", 1);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            css.AttackUseSkill(2);
         }
     }
 

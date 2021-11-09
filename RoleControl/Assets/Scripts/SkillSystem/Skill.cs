@@ -129,6 +129,9 @@ public class Skill
     /// <summary>攻击动画名称</summary>
     public string animtionName;
     
+    /// <summary> 动画事件延迟生成技能特效</summary>
+    public float delayAnimaTime;
+    
     /// <summary>预制文件名</summary>
     public string prefabName;
     

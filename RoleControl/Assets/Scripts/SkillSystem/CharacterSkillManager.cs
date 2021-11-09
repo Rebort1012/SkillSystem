@@ -14,21 +14,29 @@ public class CharacterSkillManager : MonoBehaviour
 
     /// <summary>技能的拥有者</summary>
     private CharacterStatus chStatus = null;
+
+    private SkillData curSkill;
     
     //初始化技能数据(有什么技能)
     public void Start()
     {
         chStatus = GetComponent<CharacterStatus>();
-
+        
+        SkillTemp skTemp = Instantiate(Resources.Load<SkillTemp>("Skill_1"));
+        Skill sk = LoadSkill(skTemp);;
+        SkillData skd = new SkillData();
+        skd.skill = sk;
+        skills.Add(skd);
+        
         foreach (var item in skills)
         {
             //动态加载技能特效预制体  //Resources/Skill -- 技能特效预制体 
             if (item.skillPrefab == null && !string.IsNullOrEmpty(item.skill.prefabName))
-                item.skillPrefab = LoadFxPrefab("Prefabs/Skill/" + item.skill.prefabName);
+                item.skillPrefab = LoadFxPrefab("Skill/" + item.skill.prefabName);
             
             //Resources/Skill/HitFx     技能伤害特效预制体
             if (item.hitFxPrefab == null && !string.IsNullOrEmpty(item.skill.hitFxName))
-                item.hitFxPrefab = LoadFxPrefab("Prefabs/Skill/" + item.skill.hitFxName);
+                item.hitFxPrefab = LoadFxPrefab("Skill/" + item.skill.hitFxName);
         }
     }
 
@@ -63,6 +71,14 @@ public class CharacterSkillManager : MonoBehaviour
     //释放技能
     public void DeploySkill(SkillData skillData)
     {
+        //动画某一帧触发技能特效，这里写一个延迟调用的方法，使用动画时间的百分解决特效释放时间问题
+        if ((skillData.skill.damageType & DamageType.Anima) == DamageType.Anima)
+        {
+            curSkill = skillData;
+            Invoke("DelayDeploySkill",0.2f);
+            return;
+        }
+        
         GameObject tempGo = null;
         //创建技能预制体+创建位置的偏移
         if ((skillData.skill.damageType & DamageType.FxOffset) == DamageType.FxOffset)
@@ -71,7 +87,7 @@ public class CharacterSkillManager : MonoBehaviour
         else if ((skillData.skill.damageType & DamageType.FirePos) == DamageType.FirePos)
             tempGo = GameObjectPool.I.CreateObject(skillData.skill.prefabName, skillData.skillPrefab,
                 chStatus.FirePos.position, chStatus.FirePos.rotation);
-        
+
         //从预制体对象上找到技能释放对象 
         var deployer = tempGo.GetComponent<SkillDeployer>();
         if (deployer == null)
@@ -83,13 +99,51 @@ public class CharacterSkillManager : MonoBehaviour
         deployer.DeploySkill();
 
         //技能持续时间过后，技能要销毁
-        if (skillData.skill.durationTime > 0)
-            GameObjectPool.I.Destory(tempGo, skillData.skill.durationTime);
-        else
-            GameObjectPool.I.Destory(tempGo, 0.5f);
+        if ((skillData.skill.damageType & DamageType.Bullet) != DamageType.Bullet)
+        {
+            if (skillData.skill.durationTime > 0)
+                GameObjectPool.I.Destory(tempGo, skillData.skill.durationTime);
+            else
+                GameObjectPool.I.Destory(tempGo, 0.5f);
+        }
 
         //开始冷却计时
         StartCoroutine(CoolTimeDown(skillData));
+    }
+
+    private void DelayDeploySkill()
+    {
+        GameObject tempGo = null;
+        //创建技能预制体+创建位置的偏移
+        if ((curSkill.skill.damageType & DamageType.FxOffset) == DamageType.FxOffset)
+            tempGo = GameObjectPool.I.CreateObject(curSkill.skill.prefabName, curSkill.skillPrefab,
+                transform.position + transform.forward * curSkill.skill.fxOffset, transform.rotation);
+        
+        else if ((curSkill.skill.damageType & DamageType.FirePos) == DamageType.FirePos)
+            tempGo = GameObjectPool.I.CreateObject(curSkill.skill.prefabName, curSkill.skillPrefab,
+                chStatus.FirePos.position, chStatus.FirePos.rotation);
+
+        //从预制体对象上找到技能释放对象 
+        var deployer = tempGo.GetComponent<SkillDeployer>();
+        if (deployer == null)
+            deployer = tempGo.AddComponent<SkillDeployer>();
+
+        //设置要释放的技能
+        deployer.skillData = curSkill;
+        //调用释放方法
+        deployer.DeploySkill();
+
+        //技能持续时间过后，技能要销毁
+        if ((curSkill.skill.damageType & DamageType.Bullet) != DamageType.Bullet)
+        {
+            if (curSkill.skill.durationTime > 0)
+                GameObjectPool.I.Destory(tempGo, curSkill.skill.durationTime);
+            else
+                GameObjectPool.I.Destory(tempGo, 0.5f);
+        }
+
+        //开始冷却计时
+        StartCoroutine(CoolTimeDown(curSkill));
     }
 
     //冷却时间倒计时
@@ -109,5 +163,17 @@ public class CharacterSkillManager : MonoBehaviour
     public float GetSkillCoolRemain(int id)
     {
         return skills.Find(p => p.skill.skillID == id).coolRemain;
+    }
+
+    private Skill LoadSkill(SkillTemp skillTemp)
+    {
+        Skill sk = skillTemp.skill;
+        int count = skillTemp.damageType.Length;
+        for (int i = 0; i < count; ++i)
+        {
+            sk.damageType = sk.damageType | skillTemp.damageType[i];
+        }
+
+        return sk;
     }
 }

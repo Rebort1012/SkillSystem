@@ -27,6 +27,7 @@ public class CharacterSkillSystem : MonoBehaviour
     //初始化
     public void Start()
     {
+        mAnimator = GetComponent<Animator>();
         chSkillMgr = GetComponent<CharacterSkillManager>();
         chStatus = GetComponent<CharacterStatus>();
     }
@@ -36,7 +37,7 @@ public class CharacterSkillSystem : MonoBehaviour
     /// </summary>
     /// <param name="skillid">技能编号</param>
     /// <param name="isBatter">是否连击</param>
-    public void AttackUseSkill(int skillid, bool isBatter)
+    public void AttackUseSkill(int skillid, bool isBatter = false)
     {
         //如果是连击，找当前技能的下一个连击技能
         if (currentUseSkill != null && isBatter)
@@ -60,10 +61,14 @@ public class CharacterSkillSystem : MonoBehaviour
                     //转向目标
                     //transform.LookAt(currentSelectedTarget);
                     chSkillMgr.DeploySkill(currentUseSkill);
+                    mAnimator.Play(currentUseSkill.skill.animtionName);
                 }
             }
             else
+            {
                 chSkillMgr.DeploySkill(currentUseSkill);
+                mAnimator.Play(currentUseSkill.skill.animtionName);
+            }
         }
     }
 

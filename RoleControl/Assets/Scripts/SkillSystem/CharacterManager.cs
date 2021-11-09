@@ -12,15 +12,16 @@ public class CharacterManager : MonoBehaviour
     public void Start()
     {
         css = GetComponent<CharacterSkillSystem>();
+        BuffRun.InitAllBuff();
         //mAnimator = GetComponent<Animator>();
     }
 
     public void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            css.AttackUseSkill(1);
-            //mAnimator.SetInteger("Attack", 1);
+           css.AttackUseSkill(1);
+          //mAnimator.SetInteger("Attack", 1);
         }
         
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -28,6 +29,32 @@ public class CharacterManager : MonoBehaviour
             css.AttackUseSkill(2);
             //mAnimator.SetInteger("Attack", 1);
         }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            css.AttackUseSkill(3);
+            //mAnimator.SetInteger("Attack", 1);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            css.AttackUseSkill(4);
+            //mAnimator.SetInteger("Attack", 1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            css.AttackUseSkill(5);
+            //mAnimator.SetInteger("Attack", 1);
+        }
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            if (Cursor.visible)
+                Cursor.visible = false;
+            else
+                Cursor.visible = true;
+        }
+        
     }
 
     public void OnAttackEnd()

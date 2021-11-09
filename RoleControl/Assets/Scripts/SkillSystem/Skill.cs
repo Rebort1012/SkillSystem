@@ -43,7 +43,8 @@ public enum BuffType
     BeatBack = 64,      //击退
     BeatUp = 128,       //击飞
     Pull = 256,         //拉拽
-    AddDefence = 512
+    AddDefence = 512,
+    RecoverHp = 1024,
 }
 
 /// <summary>
@@ -51,12 +52,12 @@ public enum BuffType
 /// </summary>
 public enum DamageType
 {
-    JustInTime = 2,         //直接判定伤害
+    //JustInTime = 2,         //直接判定伤害
     Bullet = 4,             //特效粒子碰撞伤害
     None = 8,               //无伤害，
-    Anima = 16,             //动画帧判定伤害
+    //Anima = 16,             //动画帧判定伤害
     Buff = 32,
-    DeBuff = 64,
+    //DeBuff = 64,
     FirePos = 128,
     FxOffset = 256,
 
@@ -88,6 +89,7 @@ public class Skill
     public string name;
 
     /// <summary>技能类型，可用 | 拼接</summary>>
+    [HideInInspector]
     public DamageType damageType;
     
     /// <summary>多次伤害持续时间</summary>
@@ -142,11 +144,14 @@ public class Skill
     public int nextBatterId;
 
     /// <summary>Buff种类</summary>
-    public BuffType buffType;
+    public BuffType[] buffType;
 
     /// <summary>Buff持续时间</summary>
     public float buffDuration;
 
     /// <summary>Buff生效间隔时间</summary>
     public float buffInterval;
+    
+    /// <summary>Buff生效间隔时间</summary>
+    public float buffValue;
 }

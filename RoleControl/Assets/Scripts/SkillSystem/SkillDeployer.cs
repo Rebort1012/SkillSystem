@@ -11,6 +11,7 @@ public class SkillDeployer : MonoBehaviour
 
     ///<summary>敌人选区，选择目标的算法</summary>
     public IAttackSelector attackTargetSelector;
+
     private DamageMode damageMode;
 
     //发出者
@@ -23,21 +24,21 @@ public class SkillDeployer : MonoBehaviour
         {
             m_skillData = value;
             damageMode = 0;
-            if((skillData.skill.damageType & DamageType.Sector) ==  DamageType.Sector)
+            if ((skillData.skill.damageType & DamageType.Sector) == DamageType.Sector)
                 damageMode = DamageMode.Sector;
-            else if((skillData.skill.damageType & DamageType.Circle) ==  DamageType.Circle)
+            else if ((skillData.skill.damageType & DamageType.Circle) == DamageType.Circle)
                 damageMode = DamageMode.Circle;
-            else if((skillData.skill.damageType & DamageType.Line) ==  DamageType.Line)
+            else if ((skillData.skill.damageType & DamageType.Line) == DamageType.Line)
                 damageMode = DamageMode.Line;
 
             if (damageMode != 0)
                 attackTargetSelector = SelectorFactory.CreateSelector(damageMode);
-            
+
             status = value.Owner.GetComponent<CharacterStatus>();
         }
         get { return m_skillData; }
     }
-    
+
 
     /// <summary>技能释放</summary>
     public virtual void DeploySkill()
@@ -45,7 +46,7 @@ public class SkillDeployer : MonoBehaviour
         if (m_skillData == null) return;
         //对自身的影响
         SelfImpact(m_skillData.Owner);
-       
+
         //执行伤害的计算
         if (damageMode != 0)
             StartCoroutine(ExecuteDamage());
@@ -81,19 +82,19 @@ public class SkillDeployer : MonoBehaviour
     {
         if (m_skillData == null)
             return;
-        
+
         m_skillData.attackTargets = attackTargetSelector.SelectTarget(m_skillData, transform);
     }
 
     private float CirculateDamage(GameObject goTarget)
     {
         CharacterStatus goStatus = goTarget.GetComponent<CharacterStatus>();
-        
+
         //是否命中计算
-        float rate = status.hitRate / (float)goStatus.dodgeRate;
+        float rate = status.hitRate / (float) goStatus.dodgeRate;
         if (rate < 1)
         {
-            int max = (int)(rate * 100);
+            int max = (int) (rate * 100);
             int val = Random.Range(0, 100);
             if (val < max)
             {
@@ -111,21 +112,40 @@ public class SkillDeployer : MonoBehaviour
     ///对敌人的影响nag
     public virtual void TargetImpact(GameObject goTarget)
     {
-        //敌人buff
-        
-        //受伤
-        var damageVal =  CirculateDamage(goTarget);
-        var targetStatus = goTarget.GetComponent<CharacterStatus>();
-        targetStatus.normalAtt = damageVal;
-        
-        targetStatus.OnDamage((int)damageVal, skillData.Owner);
-       
+        //添加敌人buff
+        //if ((skillData.skill.damageType & DamageType.Buff) == DamageType.Buff)
+
+        foreach (var buff in skillData.skill.buffType)
+        {
+            //已有该buff刷新
+            bool exist = false;
+            var buffs = goTarget.GetComponents<BuffRun>();
+            foreach (var it in buffs)
+            {
+                if (it.bufftype == buff)
+                {
+                    it.Reset();
+                    exist = true;
+                    break;
+                }
+            }
+
+            if (exist)
+                continue;
+
+            //添加新buff
+            var buffRun = goTarget.AddComponent<BuffRun>();
+            buffRun.InitBuff(buff, skillData.skill.buffDuration, skillData.skill.buffValue,
+                skillData.skill.buffInterval);
+        }
+
+
         //出受伤特效
         if (skillData.hitFxPrefab != null)
         {
             //找到受击特效的挂点
             Transform hitFxPos = goTarget.GetComponent<CharacterStatus>().HitFxPos;
-            
+
             var go = GameObjectPool.I.CreateObject(
                 skillData.skill.hitFxName,
                 skillData.hitFxPrefab,
@@ -134,26 +154,50 @@ public class SkillDeployer : MonoBehaviour
             go.transform.SetParent(hitFxPos);
             GameObjectPool.I.Destory(go, 2f);
         }
+
+        //受伤
+        var damageVal = CirculateDamage(goTarget);
+        var targetStatus = goTarget.GetComponent<CharacterStatus>();
+        targetStatus.OnDamage((int) damageVal, skillData.Owner);
     }
-    
-    public virtual void TargetImpact(GameObject goTarget,Collider collider)
+
+    public virtual void TargetImpact(GameObject goTarget, Collider collider)
     {
         //敌人buff
-        
-        //受伤
-        var damageVal =  CirculateDamage(goTarget);
-        var targetStatus = goTarget.GetComponent<CharacterStatus>();
-        targetStatus.normalAtt = damageVal;
-        
-        targetStatus.OnDamage((int)damageVal, skillData.Owner);
-       
+        //if ((skillData.skill.damageType & DamageType.Buff) == DamageType.Buff)
+
+        foreach (var buff in skillData.skill.buffType)
+        {
+            //已有该buff刷新
+            bool exist = false;
+            var buffs = goTarget.GetComponents<BuffRun>();
+            foreach (var it in buffs)
+            {
+                if (it.bufftype == buff)
+                {
+                    it.Reset();
+                    exist = true;
+                    break;
+                }
+            }
+
+            if (exist)
+                continue;
+
+            //添加新buff
+            var buffRun = goTarget.AddComponent<BuffRun>();
+            buffRun.InitBuff(buff, skillData.skill.buffDuration,
+                skillData.skill.buffValue, skillData.skill.buffInterval);
+        }
+
+
         //出受伤特效
         if (skillData.hitFxPrefab != null)
         {
-            //找到受击特效的挂点
+            //找到受击特效的挂点，碰撞但未检测到射线点，生成受击特效在hitFxPos处
             Ray ray = new Ray(transform.position, transform.forward);
             RaycastHit hit;
-            Physics.Raycast((Ray)ray, out hit, 1000);
+            Physics.Raycast((Ray) ray, out hit, 1000);
             if (hit.collider == collider)
             {
                 var go = GameObjectPool.I.CreateObject(
@@ -174,6 +218,11 @@ public class SkillDeployer : MonoBehaviour
                 GameObjectPool.I.Destory(go, 2f);
             }
         }
+
+        //受伤
+        var damageVal = CirculateDamage(goTarget);
+        var targetStatus = goTarget.GetComponent<CharacterStatus>();
+        targetStatus.OnDamage((int) damageVal, skillData.Owner);
     }
 
     ///对自身的影响
@@ -186,10 +235,10 @@ public class SkillDeployer : MonoBehaviour
             chStaus.SP -= m_skillData.skill.costSP;
             //add+2 魔法条更新
         }
-        
+
         //自身buff
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         if ((skillData.skill.damageType & DamageType.Bullet) == DamageType.Bullet)
@@ -198,7 +247,7 @@ public class SkillDeployer : MonoBehaviour
             {
                 if (skillData.skill.attackNum == 1)
                 {
-                    TargetImpact(other.gameObject,other);
+                    TargetImpact(other.gameObject, other);
                 }
                 else
                 {
@@ -210,36 +259,36 @@ public class SkillDeployer : MonoBehaviour
                         foreach (var item in skillData.attackTargets)
                         {
                             //对敌人的影响
-                            TargetImpact(item,other);
+                            TargetImpact(item, other);
                         }
                     }
                 }
+
                 GameObjectPool.I.Destory(gameObject);
             }
             else if (other.CompareTag("Wall"))
             {
                 if (skillData.hitFxPrefab != null)
                 {
-                    Ray ray = new Ray(transform.position, transform.forward); 
+                    Ray ray = new Ray(transform.position, transform.forward);
                     RaycastHit hit;
-                    Physics.Raycast((Ray) ray, out hit,1000);
-                    
+                    Physics.Raycast((Ray) ray, out hit, 1000);
+
                     if (hit.collider != other)
                         return;
-                    
+
                     //找到受击特效的挂点
                     var go = GameObjectPool.I.CreateObject(
-                    skillData.skill.hitFxName,
-                    skillData.hitFxPrefab,
-                    hit.point,
-                    other.transform.rotation);
+                        skillData.skill.hitFxName,
+                        skillData.hitFxPrefab,
+                        hit.point,
+                        other.transform.rotation);
                     //go.transform.SetParent(hitFxPos);
                     GameObjectPool.I.Destory(go, 2f);
-                    
                 }
+
                 GameObjectPool.I.Destory(gameObject);
             }
         }
     }
-    
 }

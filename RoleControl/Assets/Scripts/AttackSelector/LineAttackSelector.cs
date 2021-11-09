@@ -16,7 +16,9 @@ public class LineAttackSelector : IAttackSelector
         var array = CollectionHelper.Select<Collider, GameObject>(colliders, p => p.gameObject);
         array = CollectionHelper.FindAll<GameObject>(array,
             p => Array.IndexOf(attTags, p.tag) >= 0
-                 && p.GetComponent<CharacterStatus>().HP > 0 && p.transform.position.z - skillTransform.position.z < skillData.skill.attackDisntance);
+                 && p.GetComponent<CharacterStatus>().HP > 0 &&
+                 Mathf.Abs(p.transform.position.z - skillTransform.position.z) < skillData.skill.attackDisntance &&
+                 Mathf.Abs(p.transform.position.x - skillTransform.position.x) < skillData.skill.attackWidth / 2);
 
         if (array == null || array.Length == 0) return null;
 

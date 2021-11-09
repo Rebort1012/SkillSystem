@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
@@ -50,6 +51,9 @@ public class CharacterSkillSystem : MonoBehaviour
             if ((currentUseSkill.skill.damageType & DamageType.Select) == DamageType.Select)
             {
                 var selectedTaget = SelectTarget();
+                if (currentUseSkill.skill.attckTargetTags.Contains("Player"))
+                    selectedTaget = gameObject;
+                
                 if (selectedTaget != null)
                 {
                     //目标选中指示的显隐
@@ -58,6 +62,35 @@ public class CharacterSkillSystem : MonoBehaviour
                         currentSelectedTarget.GetComponent<CharacterStatus>().selected.SetActive(false);
                     currentSelectedTarget = selectedTaget.transform;
                     currentSelectedTarget.GetComponent<CharacterStatus>().selected.SetActive(true);
+                    
+                    //buff技能
+                    if ((currentUseSkill.skill.damageType & DamageType.Buff) == DamageType.Buff)
+                    {
+                        foreach (var buff in currentUseSkill.skill.buffType)
+                        {
+                            //已有该buff刷新
+                            bool exist = false;
+                            var buffs = selectedTaget.GetComponents<BuffRun>();
+                            foreach (var it in buffs)
+                            {
+                                if (it.bufftype == buff)
+                                {
+                                    it.Reset();
+                                    exist = true;
+                                    break;
+                                }
+                            }
+
+                            if (exist)
+                                continue;
+
+                            //添加新buff
+                            var buffRun = selectedTaget.AddComponent<BuffRun>();
+                            buffRun.InitBuff(buff, currentUseSkill.skill.buffDuration,
+                                currentUseSkill.skill.buffValue, currentUseSkill.skill.buffInterval);
+                        }
+                    }
+
                     //转向目标
                     //transform.LookAt(currentSelectedTarget);
                     chSkillMgr.DeploySkill(currentUseSkill);
@@ -109,14 +142,5 @@ public class CharacterSkillSystem : MonoBehaviour
         CollectionHelper.OrderBy<GameObject, float>(array,
             p => Vector3.Distance(transform.position, p.transform.position));
         return array[0];
-    }
-
-    //释放技能
-    public void DeploySkill()
-    {
-        if (currentUseSkill != null)
-        {
-            chSkillMgr.DeploySkill(currentUseSkill);
-        }
     }
 }

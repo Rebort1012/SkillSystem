@@ -13,29 +13,30 @@ MonoBehaviour:
   m_Name: Skill_2
   m_EditorClassIdentifier: 
   skill:
-    skillID: 0
-    skillIcon: 
-    description: 
-    name: 
+    skillID: 2
+    skillIcon: 2
+    description: 2
+    name: 2
     damageType: 0
-    durationTime: 0
-    damageInterval: 0
-    attackNum: 0
-    damageRatio: 0
-    damage: 0
-    coolTime: 0
-    costSP: 0
-    attackDisntance: 0
+    durationTime: 9
+    damageInterval: 3
+    attackNum: 5
+    damageRatio: 1
+    damage: 150
+    coolTime: 30
+    costSP: 15
+    attackDisntance: 5
     attackWidth: 0
     attackAngle: 0
-    fxOffset: 0
-    attckTargetTags: []
-    animtionName: 
+    fxOffset: 3
+    attckTargetTags:
+    - Enemy
+    animtionName: Attack
     delayAnimaTime: 0
-    prefabName: 
-    hitFxName: 
+    prefabName: Skill_76_Hit
+    hitFxName: Skill_75_Cast
     nextBatterId: 0
-    buffType: 0
-    buffDuration: 0
-    buffInterval: 0
-  damageType: 
+    buffType: 8
+    buffDuration: 30
+    buffInterval: 5
+  damageType: 400000000001000000020000

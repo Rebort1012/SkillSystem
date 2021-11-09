@@ -17,9 +17,15 @@ public class CharacterManager : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetMouseButtonDown(0))
         {
             css.AttackUseSkill(1);
+            //mAnimator.SetInteger("Attack", 1);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            css.AttackUseSkill(2);
             //mAnimator.SetInteger("Attack", 1);
         }
     }

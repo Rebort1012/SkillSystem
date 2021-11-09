@@ -16,17 +16,23 @@ public class CharacterSkillManager : MonoBehaviour
     private CharacterStatus chStatus = null;
 
     private SkillData curSkill;
-    
-    //初始化技能数据(有什么技能)
-    public void Start()
+
+    private void AddSkill(string path)
     {
-        chStatus = GetComponent<CharacterStatus>();
-        
-        SkillTemp skTemp = Instantiate(Resources.Load<SkillTemp>("Skill_1"));
+        SkillTemp skTemp = Instantiate(Resources.Load<SkillTemp>(path));
         Skill sk = LoadSkill(skTemp);;
         SkillData skd = new SkillData();
         skd.skill = sk;
         skills.Add(skd);
+    }
+
+    //初始化技能数据(有什么技能)
+    public void Start()
+    {
+        chStatus = GetComponent<CharacterStatus>();
+
+        AddSkill("Skill_1");
+        AddSkill("Skill_2");
         
         foreach (var item in skills)
         {
@@ -84,6 +90,7 @@ public class CharacterSkillManager : MonoBehaviour
         if ((skillData.skill.damageType & DamageType.FxOffset) == DamageType.FxOffset)
             tempGo = GameObjectPool.I.CreateObject(skillData.skill.prefabName, skillData.skillPrefab,
                 transform.position + transform.forward * skillData.skill.fxOffset, transform.rotation);
+       
         else if ((skillData.skill.damageType & DamageType.FirePos) == DamageType.FirePos)
             tempGo = GameObjectPool.I.CreateObject(skillData.skill.prefabName, skillData.skillPrefab,
                 chStatus.FirePos.position, chStatus.FirePos.rotation);

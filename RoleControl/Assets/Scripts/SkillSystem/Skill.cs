@@ -52,25 +52,20 @@ public enum BuffType
 /// </summary>
 public enum DamageType
 {
-    //JustInTime = 2,         //直接判定伤害
+    
     Bullet = 4,             //特效粒子碰撞伤害
     None = 8,               //无伤害，
-    //Anima = 16,             //动画帧判定伤害
-    Buff = 32,
-    //DeBuff = 64,
-    FirePos = 128,
-    FxOffset = 256,
-
-    //DamageOnce = 128,       //单次伤害    伤害间隔和CD相同即为单次伤害
-    //DamageMult = 512,       //多次伤害
+    Buff = 32,              //buffSkill
     
-    //Single = 1024,          //单体        记录伤害个数即可     
-    //Group = 2048,           //群体伤害
-        
+    //二选一
+    FirePos = 128,          //发射位置点
+    FxOffset = 256,         //发射偏移
+    
+    //四选一
     Circle = 512,          //圈判定
-    Sector = 1024,          //扇形判定
+    Sector = 1024,         //扇形判定
     Line = 4096,           //线性判定
-    Select = 8192,            //选中才可释放
+    Select = 8192,         //选中才可释放
 }
 
 [Serializable]

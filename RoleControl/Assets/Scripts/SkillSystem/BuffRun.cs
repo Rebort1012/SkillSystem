@@ -36,7 +36,6 @@ public class BuffRun : MonoBehaviour
     void Start()
     {
         target = GetComponent<CharacterStatus>();
-        target.uiPortrait.AddBuffIcon(this);
         StartCoroutine(ExcuteDamage());
     }
 
@@ -65,22 +64,32 @@ public class BuffRun : MonoBehaviour
     private void TargetImpact()
     {
         Transform fxPosTf = target.HitFxPos;
-        
-        if(bufftype == BuffType.Burn || bufftype == BuffType.Poison || bufftype == BuffType.Light) 
-            target.OnDamage(value,gameObject);
+
+        if (bufftype == BuffType.Burn || bufftype == BuffType.Poison || bufftype == BuffType.Light)
+            target.OnDamage(value, gameObject, true);
         else if (bufftype == BuffType.Slow)//减速
             fxPosTf = target.transform;
         else if (bufftype == BuffType.BeatBack)
-            target.transform.DOMove(target.transform.position - target.transform.forward * value,0.5f);
+        {
+            Vector3 dir = -target.transform.position + GameObject.FindGameObjectWithTag("Player").transform.position;
+            dir.y = 0;
+            target.transform.DOMove(target.transform.position - dir.normalized * value,0.5f);
+            durationTime = 2f;
+        }
         else if (bufftype == BuffType.BeatUp)
+        {
             target.transform.DOMove(target.transform.position - Vector3.up * value,0.5f);
+            durationTime = 2f;
+        }
         else if (bufftype == BuffType.AddDefence)
         {
             fxPosTf = target.transform;
             target.defence += value;
         }
         else if (bufftype == BuffType.RecoverHp)
-            target.OnDamage(-value,gameObject);
+        {
+            target.OnDamage(-value, gameObject, true);
+        }
 
         if (buffFx.ContainsKey(bufftype))
         {

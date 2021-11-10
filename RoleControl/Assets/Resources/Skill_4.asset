@@ -23,7 +23,7 @@ MonoBehaviour:
     attackNum: 1
     damageRatio: 1
     damage: 200
-    coolTime: 20
+    coolTime: 34
     costSP: 14
     attackDisntance: 0
     attackWidth: 0

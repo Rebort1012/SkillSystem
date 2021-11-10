@@ -40,12 +40,12 @@ public class CharacterStatus : MonoBehaviour
         if (CompareTag("Player"))
         {
             uiPortrait = GameObject.FindGameObjectWithTag("HeroHead").GetComponent<UIPortrait>();
-            uiPortrait.gameObject.SetActive(false);
         }
         else if (CompareTag("Enemy"))
         {
             Transform canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
             uiPortrait = Instantiate(Resources.Load<GameObject>("UIEnemyPortrait"), canvas).GetComponent<UIPortrait>();
+            uiPortrait.gameObject.SetActive(false);
         }
         uiPortrait.cstatus = this;
         uiPortrait.RefreshHpMp();
@@ -59,7 +59,7 @@ public class CharacterStatus : MonoBehaviour
     }
     
     /// <summary>受击 模板方法</summary>
-    public virtual void OnDamage(float damage, GameObject killer)
+    public virtual void OnDamage(float damage, GameObject killer,bool isBuff = false)
     {
         //应用伤害
         var damageVal = ApplyDamage(damage, killer);
@@ -71,9 +71,12 @@ public class CharacterStatus : MonoBehaviour
         pop.Value = damageVal.ToString();
         
         //ApplyUI画像
-        uiPortrait.gameObject.SetActive(true);
-        uiPortrait.transform.SetAsLastSibling();
-        uiPortrait.RefreshHpMp();
+        if (!isBuff)
+        {
+            uiPortrait.gameObject.SetActive(true);
+            uiPortrait.transform.SetAsLastSibling();
+            uiPortrait.RefreshHpMp();
+        }
     }
 
     /// <summary>应用伤害</summary>

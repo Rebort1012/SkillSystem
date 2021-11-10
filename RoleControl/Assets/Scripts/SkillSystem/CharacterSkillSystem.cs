@@ -53,21 +53,31 @@ public class CharacterSkillSystem : MonoBehaviour
                 var selectedTaget = SelectTarget();
                 if (currentUseSkill.skill.attckTargetTags.Contains("Player"))
                     selectedTaget = gameObject;
-                
+
                 if (selectedTaget != null)
                 {
-                    //目标选中指示的显隐
+                    CharacterStatus selectStatus = null;
+                    //修改成获取characterStatus中的Selected节点设置隐藏；
                     if (currentSelectedTarget != null)
-                        //修改成获取characterStatus中的Selected节点设置隐藏；
-                        currentSelectedTarget.GetComponent<CharacterStatus>().selected.SetActive(false);
+                    {
+                        selectStatus = currentSelectedTarget.GetComponent<CharacterStatus>();
+                        selectStatus.selected.SetActive(false);
+                    }
                     currentSelectedTarget = selectedTaget.transform;
-                    currentSelectedTarget.GetComponent<CharacterStatus>().selected.SetActive(true);
+                    selectStatus = currentSelectedTarget.GetComponent<CharacterStatus>();
+                    selectStatus.selected.SetActive(true);
                     
                     //buff技能
                     if ((currentUseSkill.skill.damageType & DamageType.Buff) == DamageType.Buff)
                     {
                         foreach (var buff in currentUseSkill.skill.buffType)
                         {
+                            //加bufficon
+                            GameObject uiPortrait = selectStatus.uiPortrait.gameObject;
+                            uiPortrait.SetActive(true);
+                            uiPortrait.transform.SetAsLastSibling();
+                            selectStatus.uiPortrait.AddBuffIcon(buff, currentUseSkill.skill.buffDuration);
+
                             //已有该buff刷新
                             bool exist = false;
                             var buffs = selectedTaget.GetComponents<BuffRun>();

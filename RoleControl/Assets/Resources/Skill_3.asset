@@ -18,15 +18,15 @@ MonoBehaviour:
     description: 3
     name: "\u6C34\u6D41"
     damageType: 0
-    durationTime: 4.5
-    damageInterval: 1.5
+    durationTime: 3.5
+    damageInterval: 1.2
     attackNum: 5
     damageRatio: 1
     damage: 133
-    coolTime: 20
+    coolTime: 35
     costSP: 14
-    attackDisntance: 8
-    attackWidth: 6
+    attackDisntance: 10
+    attackWidth: 8
     attackAngle: 0
     fxOffset: 0
     attckTargetTags:

@@ -37,7 +37,7 @@ MonoBehaviour:
     hitFxName: Skill_75_Cast
     nextBatterId: 0
     buffType: 0800000004000000
-    buffDuration: 30
+    buffDuration: 25
     buffInterval: 5
     buffValue: 50
   damageType: 0001000000020000

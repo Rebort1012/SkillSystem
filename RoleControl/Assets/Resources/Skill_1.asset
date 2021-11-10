@@ -37,7 +37,7 @@ MonoBehaviour:
     hitFxName: Skill_2_Hit
     nextBatterId: 0
     buffType: 02000000
-    buffDuration: 20
-    buffInterval: 5
+    buffDuration: 7
+    buffInterval: 2
     buffValue: 30
   damageType: 8000000004000000

@@ -22,8 +22,8 @@ MonoBehaviour:
     damageInterval: 0
     attackNum: 1
     damageRatio: 1
-    damage: 30
-    coolTime: 30
+    damage: 32
+    coolTime: 32
     costSP: 18
     attackDisntance: 8
     attackWidth: 0

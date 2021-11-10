@@ -57,6 +57,52 @@ public class SkillDeployer : MonoBehaviour
     {
         //按持续时间及，两次伤害间隔，
         float attackTimer = 0; //已持续攻击的时间
+        
+        ResetTargets();
+        if (skillData.attackTargets != null && skillData.attackTargets.Length > 0)
+        {
+            //Debug.Log(skillData.attackTargets[0].name);
+            foreach (var item in skillData.attackTargets)
+            {
+                //刷新敌人头像显示
+                CharacterStatus targetStatus = item.GetComponent<CharacterStatus>();
+                GameObject uiPortrait = targetStatus.uiPortrait.gameObject;
+                uiPortrait.SetActive(true);
+                uiPortrait.transform.SetAsLastSibling();
+                
+                //加buff
+                foreach (var buff in skillData.skill.buffType)
+                {
+                    //加bufficon
+                    
+                    targetStatus.uiPortrait.AddBuffIcon(buff, skillData.skill.buffDuration);
+                    
+                    //已有该buff刷新
+                    bool exist = false;
+                    var buffs = item.GetComponents<BuffRun>();
+                    
+                    foreach (var it in buffs)
+                    {
+                        if (it.bufftype == buff)
+                        {
+                            it.Reset();
+                            exist = true;
+                            break;
+                        }
+                    }
+
+                    if (exist)
+                    {
+                        continue;
+                    }
+
+                    //添加新buff
+                    var buffRun = item.AddComponent<BuffRun>();
+                    buffRun.InitBuff(buff, skillData.skill.buffDuration, skillData.skill.buffValue,
+                        skillData.skill.buffInterval);
+                }
+            }
+        }
 
         do
         {
@@ -112,34 +158,6 @@ public class SkillDeployer : MonoBehaviour
     ///对敌人的影响nag
     public virtual void TargetImpact(GameObject goTarget)
     {
-        //添加敌人buff
-        //if ((skillData.skill.damageType & DamageType.Buff) == DamageType.Buff)
-
-        foreach (var buff in skillData.skill.buffType)
-        {
-            //已有该buff刷新
-            bool exist = false;
-            var buffs = goTarget.GetComponents<BuffRun>();
-            foreach (var it in buffs)
-            {
-                if (it.bufftype == buff)
-                {
-                    it.Reset();
-                    exist = true;
-                    break;
-                }
-            }
-
-            if (exist)
-                continue;
-
-            //添加新buff
-            var buffRun = goTarget.AddComponent<BuffRun>();
-            buffRun.InitBuff(buff, skillData.skill.buffDuration, skillData.skill.buffValue,
-                skillData.skill.buffInterval);
-        }
-
-
         //出受伤特效
         if (skillData.hitFxPrefab != null)
         {
@@ -164,8 +182,6 @@ public class SkillDeployer : MonoBehaviour
     public virtual void TargetImpact(GameObject goTarget, Collider collider)
     {
         //敌人buff
-        //if ((skillData.skill.damageType & DamageType.Buff) == DamageType.Buff)
-
         foreach (var buff in skillData.skill.buffType)
         {
             //已有该buff刷新
@@ -189,6 +205,7 @@ public class SkillDeployer : MonoBehaviour
             buffRun.InitBuff(buff, skillData.skill.buffDuration,
                 skillData.skill.buffValue, skillData.skill.buffInterval);
         }
+        
 
 
         //出受伤特效
@@ -235,8 +252,6 @@ public class SkillDeployer : MonoBehaviour
             chStaus.SP -= m_skillData.skill.costSP;
             //add+2 魔法条更新
         }
-
-        //自身buff
     }
 
     private void OnTriggerEnter(Collider other)
@@ -247,6 +262,18 @@ public class SkillDeployer : MonoBehaviour
             {
                 if (skillData.skill.attackNum == 1)
                 {
+                    CharacterStatus targetStatus = other.GetComponent<CharacterStatus>();
+                    GameObject uiPortrait = targetStatus.uiPortrait.gameObject;
+                    uiPortrait.SetActive(true);
+                    uiPortrait.transform.SetAsLastSibling();
+                    
+                    //加buff
+                    foreach (var buff in skillData.skill.buffType)
+                    {
+                        //加bufficon
+                        targetStatus.uiPortrait.AddBuffIcon(buff, skillData.skill.buffDuration);
+                    }
+                    
                     TargetImpact(other.gameObject, other);
                 }
                 else
@@ -258,6 +285,19 @@ public class SkillDeployer : MonoBehaviour
                     {
                         foreach (var item in skillData.attackTargets)
                         {
+                            //刷新敌人头像显示
+                            CharacterStatus targetStatus = item.GetComponent<CharacterStatus>();
+                            GameObject uiPortrait = targetStatus.uiPortrait.gameObject;
+                            uiPortrait.SetActive(true);
+                            uiPortrait.transform.SetAsLastSibling();
+                            
+                            //加buff
+                            foreach (var buff in skillData.skill.buffType)
+                            {
+                                //加bufficon
+                                targetStatus.uiPortrait.AddBuffIcon(buff, skillData.skill.buffDuration);
+                            }
+
                             //对敌人的影响
                             TargetImpact(item, other);
                         }
@@ -290,5 +330,22 @@ public class SkillDeployer : MonoBehaviour
                 GameObjectPool.I.Destory(gameObject);
             }
         }
+    }
+    
+    
+    public static Dictionary<BuffType, string> buffIconName = new Dictionary<BuffType, string>();
+    
+    public static void InitBuffIconName()
+    {
+        buffIconName.Add(BuffType.Burn,"Buff_13");
+        buffIconName.Add(BuffType.Slow,"Buff_15");
+        buffIconName.Add(BuffType.Stun,"Buff_12");
+        buffIconName.Add(BuffType.Poison,"Buff_14");
+        buffIconName.Add(BuffType.BeatBack,"Buff_5");
+        buffIconName.Add(BuffType.BeatUp,"Buff_4");
+        buffIconName.Add(BuffType.Pull,"Buff_6");
+        buffIconName.Add(BuffType.AddDefence,"Buff_3");
+        buffIconName.Add(BuffType.RecoverHp,"Buff_7");
+        buffIconName.Add(BuffType.Light,"Buff_8");
     }
 }

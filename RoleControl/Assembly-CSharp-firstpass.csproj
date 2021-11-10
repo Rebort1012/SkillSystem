@@ -317,26 +317,26 @@
  <Reference Include="UnityEditor.UnityConnectModule">
  <HintPath>G:/Unity/2020.3.12f1c1/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
  </Reference>
- <Reference Include="Newtonsoft.Json">
- <HintPath>G:/SkillSystem/RoleControl/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
- </Reference>
  <Reference Include="DOTween">
  <HintPath>G:/SkillSystem/RoleControl/Assets/Demigiant/DOTween/DOTween.dll</HintPath>
  </Reference>
  <Reference Include="DemiLib">
  <HintPath>G:/SkillSystem/RoleControl/Assets/Demigiant/DemiLib/DemiLib.dll</HintPath>
  </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>G:/SkillSystem/RoleControl/Library/PackageCache/com.unity.nuget.newtonsoft-json@2.0.0/Runtime/Newtonsoft.Json.dll</HintPath>
+ </Reference>
  <Reference Include="DOTween46">
  <HintPath>G:/SkillSystem/RoleControl/Assets/Demigiant/DOTween/DOTween46.dll</HintPath>
  </Reference>
- <Reference Include="DOTween50">
- <HintPath>G:/SkillSystem/RoleControl/Assets/Demigiant/DOTween/DOTween50.dll</HintPath>
+ <Reference Include="DOTween43">
+ <HintPath>G:/SkillSystem/RoleControl/Assets/Demigiant/DOTween/DOTween43.dll</HintPath>
  </Reference>
  <Reference Include="DOTweenPro">
  <HintPath>G:/SkillSystem/RoleControl/Assets/Demigiant/DOTweenPro/DOTweenPro.dll</HintPath>
  </Reference>
- <Reference Include="DOTween43">
- <HintPath>G:/SkillSystem/RoleControl/Assets/Demigiant/DOTween/DOTween43.dll</HintPath>
+ <Reference Include="DOTween50">
+ <HintPath>G:/SkillSystem/RoleControl/Assets/Demigiant/DOTween/DOTween50.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>G:/Unity/2020.3.12f1c1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -700,6 +700,9 @@
  </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>G:/SkillSystem/RoleControl/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.Sprite.Editor">
+ <HintPath>G:/SkillSystem/RoleControl/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>G:/SkillSystem/RoleControl/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>

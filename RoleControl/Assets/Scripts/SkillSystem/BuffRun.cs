@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class BuffRun : MonoBehaviour
     private float interval;
 
     private float attackTimer;
+
+    private float curTime;
 
     private CharacterStatus target;
     
@@ -27,14 +30,20 @@ public class BuffRun : MonoBehaviour
     public void Reset()
     {
         attackTimer = 0;
+        curTime = 0;
     }
 
     void Start()
     {
         target = GetComponent<CharacterStatus>();
+        target.uiPortrait.AddBuffIcon(this);
         StartCoroutine(ExcuteDamage());
     }
-    
+
+    private void Update()
+    {
+        curTime += Time.deltaTime;
+    }
 
     private IEnumerator ExcuteDamage()
     {
@@ -58,7 +67,7 @@ public class BuffRun : MonoBehaviour
         Transform fxPosTf = target.HitFxPos;
         
         if(bufftype == BuffType.Burn || bufftype == BuffType.Poison || bufftype == BuffType.Light) 
-            target.OnDamage(value,null);
+            target.OnDamage(value,gameObject);
         else if (bufftype == BuffType.Slow)//减速
             fxPosTf = target.transform;
         else if (bufftype == BuffType.BeatBack)
@@ -71,12 +80,15 @@ public class BuffRun : MonoBehaviour
             target.defence += value;
         }
         else if (bufftype == BuffType.RecoverHp)
-            target.OnDamage(-value,null);
+            target.OnDamage(-value,gameObject);
 
-        GameObject go = Resources.Load<GameObject>($"Skill/{buffFx[bufftype]}");
-        GameObject buffGo = GameObjectPool.I.CreateObject(buffFx[bufftype], go, fxPosTf.position, fxPosTf.rotation);
-        buffGo.transform.SetParent(fxPosTf);
-        GameObjectPool.I.Destory(buffGo, interval);
+        if (buffFx.ContainsKey(bufftype))
+        {
+            GameObject go = Resources.Load<GameObject>($"Skill/{buffFx[bufftype]}");
+            GameObject buffGo = GameObjectPool.I.CreateObject(buffFx[bufftype], go, fxPosTf.position, fxPosTf.rotation);
+            buffGo.transform.SetParent(fxPosTf);
+            GameObjectPool.I.Destory(buffGo, interval);
+        }
     }
 
     private static Dictionary<BuffType, string> buffFx = new Dictionary<BuffType, string>();
@@ -91,14 +103,8 @@ public class BuffRun : MonoBehaviour
         buffFx.Add(BuffType.RecoverHp,"FX_Heal_Light_Cast");
     }
 
-    /*Burn = 2,        
-    Slow = 4,        
-    Light = 8,       
-    Stun = 16,       
-    Poison = 32,     
-    BeatBack = 64,   
-    BeatUp = 128,    
-    Pull = 256,      
-    AddDefence = 512,
-    RecoverHp = 1024,*/
+    public float GetRemainTime()
+    {
+        return durationTime - curTime;
+    }
 }

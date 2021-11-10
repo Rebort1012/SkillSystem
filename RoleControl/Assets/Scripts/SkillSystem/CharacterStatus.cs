@@ -32,10 +32,24 @@ public class CharacterStatus : MonoBehaviour
 
     private GameObject damagePopup;
     private Transform hudPos;
+
+    public UIPortrait uiPortrait; 
     
     public virtual void Start()
     {
-        //StartCoroutine(InitHUD());
+        if (CompareTag("Player"))
+        {
+            uiPortrait = GameObject.FindGameObjectWithTag("HeroHead").GetComponent<UIPortrait>();
+            uiPortrait.gameObject.SetActive(false);
+        }
+        else if (CompareTag("Enemy"))
+        {
+            Transform canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
+            uiPortrait = Instantiate(Resources.Load<GameObject>("UIEnemyPortrait"), canvas).GetComponent<UIPortrait>();
+        }
+        uiPortrait.cstatus = this;
+        uiPortrait.RefreshHpMp();
+        
         damagePopup = Resources.Load<GameObject>("HUD");
         
         selected = TransformHelper.FindChild(transform, "Selected").gameObject;
@@ -49,28 +63,29 @@ public class CharacterStatus : MonoBehaviour
     {
         //应用伤害
         var damageVal = ApplyDamage(damage, killer);
-        //应用HUD 
+        
+        //应用PopDamage
         DamagePopup pop = Instantiate(damagePopup).GetComponent<DamagePopup>();
         pop.target = hudPos;
         pop.transform.rotation = Quaternion.identity;
         pop.Value = damageVal.ToString();
-        //ApplyHUD(damageVal);
-        //应用死亡
-        if (HP <= 0)
-        {
-            HP = 0;
-        }
-        else
-        {
-            //buff创建
-        }
-        //Dead(killer);
+        
+        //ApplyUI画像
+        uiPortrait.gameObject.SetActive(true);
+        uiPortrait.transform.SetAsLastSibling();
+        uiPortrait.RefreshHpMp();
     }
-    
+
     /// <summary>应用伤害</summary>
     public virtual float ApplyDamage(float damage, GameObject killer)
     {
         HP -= damage;
+        //应用死亡
+        if (HP <= 0)
+        {
+            HP = 0;
+            Destroy(killer, 5f);
+        }
         
         return damage;
     }

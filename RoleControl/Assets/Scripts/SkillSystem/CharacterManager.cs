@@ -8,11 +8,16 @@ public class CharacterManager : MonoBehaviour
     //加载技能数据，英雄数据等   
     private Animator mAnimator;
     private CharacterSkillSystem css;
-    
+
+    private void Awake()
+    {
+        BuffRun.InitAllBuff();
+        BuffIcon.InitBuffIconName();
+    }
+
     public void Start()
     {
         css = GetComponent<CharacterSkillSystem>();
-        BuffRun.InitAllBuff();
         //mAnimator = GetComponent<Animator>();
     }
 

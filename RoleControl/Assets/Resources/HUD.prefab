@@ -47,7 +47,7 @@ MonoBehaviour:
   ContentWidth: 200
   ContentHeight: 100
   FreeTime: 1.5
-  font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  font: {fileID: 12800000, guid: 0e7da9c9da2354745bd0e0b5b5e14940, type: 3}
   color: {r: 1, g: 0.38432646, b: 0, a: 1}
   fontSize: 50
   speed: 0.5

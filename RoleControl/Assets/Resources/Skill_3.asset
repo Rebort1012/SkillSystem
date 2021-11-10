@@ -26,7 +26,7 @@ MonoBehaviour:
     coolTime: 20
     costSP: 14
     attackDisntance: 8
-    attackWidth: 4
+    attackWidth: 6
     attackAngle: 0
     fxOffset: 0
     attckTargetTags:
@@ -34,10 +34,10 @@ MonoBehaviour:
     animtionName: Attack
     delayAnimaTime: 0
     prefabName: Skill_20_Hit
-    hitFxName: Skill_20_Cast
+    hitFxName: Skill_23_Hit
     nextBatterId: 0
-    buffType: 04000000
+    buffType: 0400000040000000
     buffDuration: 30
     buffInterval: 30
-    buffValue: 10
+    buffValue: 4
   damageType: 0010000000010000

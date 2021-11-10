@@ -15,28 +15,29 @@ MonoBehaviour:
   skill:
     skillID: 2
     skillIcon: 2
-    description: "\u6280\u80FD2"
-    name: "\u843D\u96F7"
+    description: 2
+    name: "\u95EA\u7535"
     damageType: 0
-    durationTime: 9
-    damageInterval: 3
+    durationTime: 5
+    damageInterval: 5
     attackNum: 5
-    damageRatio: 0.5
-    damage: 200
+    damageRatio: 1
+    damage: 150
     coolTime: 30
-    costSP: 10
-    attackDisntance: 5
+    costSP: 15
+    attackDisntance: 2.5
     attackWidth: 0
     attackAngle: 0
     fxOffset: 3
     attckTargetTags:
     - Enemy
     animtionName: Attack
-    delayAnimaTime: 0
+    delayAnimaTime: 0.2
     prefabName: Skill_76_Hit
     hitFxName: Skill_75_Cast
     nextBatterId: 0
-    buffType: 4
+    buffType: 0800000004000000
     buffDuration: 30
-    buffInterval: 30
-  damageType: 000200004000000000040000
+    buffInterval: 5
+    buffValue: 50
+  damageType: 0001000000020000

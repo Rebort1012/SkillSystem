@@ -21,9 +21,9 @@ MonoBehaviour:
     durationTime: 5
     damageInterval: 5
     attackNum: 1
-    damageRatio: 0.2
+    damageRatio: 0.4
     damage: 100
-    coolTime: 0
+    coolTime: 1
     costSP: 0
     attackDisntance: 0
     attackWidth: 0
@@ -32,11 +32,12 @@ MonoBehaviour:
     attckTargetTags:
     - Enemy
     animtionName: Attack
-    delayAnimaTime: 0.2
+    delayAnimaTime: 0.4
     prefabName: Skill_2_Fly
     hitFxName: Skill_2_Hit
     nextBatterId: 0
-    buffType: 0
-    buffDuration: 0
-    buffInterval: 0
-  damageType: 800000000400000040000000
+    buffType: 02000000
+    buffDuration: 20
+    buffInterval: 5
+    buffValue: 30
+  damageType: 8000000004000000

@@ -5,13 +5,13 @@ using UnityEngine;
 public class CharacterStatus : MonoBehaviour
 {
     /// <summary>生命 </summary>
-    public int HP = 100;
+    public float HP = 100;
     /// <summary>生命 </summary>
-    public int MaxHP=100;
+    public float MaxHP=100;
     /// <summary>当前魔法 </summary>
-    public int SP = 100;
+    public float SP = 100;
     /// <summary>最大魔法 </summary>
-    public int MaxSP =100;
+    public float MaxSP =100;
     /// <summary>伤害基数</summary>
     public float damage = 100;
     ///<summary>命中</summary>
@@ -29,14 +29,7 @@ public class CharacterStatus : MonoBehaviour
     public Transform FirePos;
     
     public GameObject selected;
-    
-    [HideInInspector]
-    public float normalAtt;
-    /// <summary>Buff列表 </summary>
-    protected float buffDamage;
-    protected float durationTime;
-    protected float interval;
-    
+
     private GameObject damagePopup;
     private Transform hudPos;
     
@@ -45,13 +38,14 @@ public class CharacterStatus : MonoBehaviour
         //StartCoroutine(InitHUD());
         damagePopup = Resources.Load<GameObject>("HUD");
         
+        selected = TransformHelper.FindChild(transform, "Selected").gameObject;
         HitFxPos = TransformHelper.FindChild(transform, "HitFxPos");
         FirePos = TransformHelper.FindChild(transform, "FirePos");
         hudPos = TransformHelper.FindChild(transform, "HUDPos");
     }
     
     /// <summary>受击 模板方法</summary>
-    public virtual void OnDamage(int damage, GameObject killer)
+    public virtual void OnDamage(float damage, GameObject killer)
     {
         //应用伤害
         var damageVal = ApplyDamage(damage, killer);
@@ -74,7 +68,7 @@ public class CharacterStatus : MonoBehaviour
     }
     
     /// <summary>应用伤害</summary>
-    public virtual int ApplyDamage(int damage, GameObject killer)
+    public virtual float ApplyDamage(float damage, GameObject killer)
     {
         HP -= damage;
         

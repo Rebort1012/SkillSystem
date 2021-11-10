@@ -49,6 +49,6 @@ MonoBehaviour:
   FreeTime: 1.5
   font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   color: {r: 1, g: 0.38432646, b: 0, a: 1}
-  fontSize: 40
+  fontSize: 50
   speed: 0.5
   target: {fileID: 89328222756722003}

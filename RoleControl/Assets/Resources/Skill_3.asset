@@ -23,11 +23,11 @@ MonoBehaviour:
     attackNum: 5
     damageRatio: 1
     damage: 133
-    coolTime: 35
-    costSP: 14
-    attackDisntance: 10
+    coolTime: 5
+    costSP: 13
+    attackDisntance: 11
     attackWidth: 8
-    attackAngle: 0
+    attackAngle: 180
     fxOffset: 0
     attckTargetTags:
     - Enemy
@@ -40,4 +40,4 @@ MonoBehaviour:
     buffDuration: 30
     buffInterval: 30
     buffValue: 4
-  damageType: 0010000000010000
+  damageType: 0004000000010000

@@ -48,7 +48,7 @@ public class SkillDeployer : MonoBehaviour
         SelfImpact(m_skillData.Owner);
 
         //执行伤害的计算
-        if (damageMode != 0)
+        if (damageMode != 0) 
             StartCoroutine(ExecuteDamage());
     }
 
@@ -66,15 +66,13 @@ public class SkillDeployer : MonoBehaviour
             {
                 //刷新敌人头像显示
                 CharacterStatus targetStatus = item.GetComponent<CharacterStatus>();
-                GameObject uiPortrait = targetStatus.uiPortrait.gameObject;
-                uiPortrait.SetActive(true);
-                uiPortrait.transform.SetAsLastSibling();
-                
+                MonsterMgr.I.HideAllEnemyPortraits();
+                targetStatus.uiPortrait.ShowPortrait();
+
                 //加buff
                 foreach (var buff in skillData.skill.buffType)
                 {
                     //加bufficon
-                    
                     targetStatus.uiPortrait.AddBuffIcon(buff, skillData.skill.buffDuration);
                     
                     //已有该buff刷新
@@ -179,8 +177,21 @@ public class SkillDeployer : MonoBehaviour
         targetStatus.OnDamage((int) damageVal, skillData.Owner);
     }
 
+	//碰撞触发目标影响
     public virtual void TargetImpact(GameObject goTarget, Collider collider)
     {
+        //刷新敌人头像显示
+        CharacterStatus targetStatus = goTarget.GetComponent<CharacterStatus>();
+        MonsterMgr.I.HideAllEnemyPortraits();
+        targetStatus.uiPortrait.ShowPortrait();
+
+        //加buff
+        foreach (var buff in skillData.skill.buffType)
+        {
+            //加bufficon
+            targetStatus.uiPortrait.AddBuffIcon(buff, skillData.skill.buffDuration);
+        }
+        
         //敌人buff
         foreach (var buff in skillData.skill.buffType)
         {
@@ -205,8 +216,6 @@ public class SkillDeployer : MonoBehaviour
             buffRun.InitBuff(buff, skillData.skill.buffDuration,
                 skillData.skill.buffValue, skillData.skill.buffInterval);
         }
-        
-
 
         //出受伤特效
         if (skillData.hitFxPrefab != null)
@@ -238,7 +247,6 @@ public class SkillDeployer : MonoBehaviour
 
         //受伤
         var damageVal = CirculateDamage(goTarget);
-        var targetStatus = goTarget.GetComponent<CharacterStatus>();
         targetStatus.OnDamage((int) damageVal, skillData.Owner);
     }
 
@@ -250,6 +258,7 @@ public class SkillDeployer : MonoBehaviour
         if (chStaus.SP != 0)
         {
             chStaus.SP -= m_skillData.skill.costSP;
+            chStaus.uiPortrait.RefreshHpMp();
             //add+2 魔法条更新
         }
     }
@@ -262,42 +271,17 @@ public class SkillDeployer : MonoBehaviour
             {
                 if (skillData.skill.attackNum == 1)
                 {
-                    CharacterStatus targetStatus = other.GetComponent<CharacterStatus>();
-                    GameObject uiPortrait = targetStatus.uiPortrait.gameObject;
-                    uiPortrait.SetActive(true);
-                    uiPortrait.transform.SetAsLastSibling();
-                    
-                    //加buff
-                    foreach (var buff in skillData.skill.buffType)
-                    {
-                        //加bufficon
-                        targetStatus.uiPortrait.AddBuffIcon(buff, skillData.skill.buffDuration);
-                    }
-                    
                     TargetImpact(other.gameObject, other);
                 }
                 else
                 {
                     //通过选择器选好攻击目标
                     IAttackSelector selector = new CircleAttackSelector();
-                    selector.SelectTarget(m_skillData, other.transform);
+                    selector.SelectTarget(m_skillData, transform);
                     if (skillData.attackTargets != null && skillData.attackTargets.Length > 0)
                     {
                         foreach (var item in skillData.attackTargets)
                         {
-                            //刷新敌人头像显示
-                            CharacterStatus targetStatus = item.GetComponent<CharacterStatus>();
-                            GameObject uiPortrait = targetStatus.uiPortrait.gameObject;
-                            uiPortrait.SetActive(true);
-                            uiPortrait.transform.SetAsLastSibling();
-                            
-                            //加buff
-                            foreach (var buff in skillData.skill.buffType)
-                            {
-                                //加bufficon
-                                targetStatus.uiPortrait.AddBuffIcon(buff, skillData.skill.buffDuration);
-                            }
-
                             //对敌人的影响
                             TargetImpact(item, other);
                         }

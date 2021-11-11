@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using DG.Tweening;
 using UnityEngine;
 
@@ -22,9 +23,14 @@ public class BuffRun : MonoBehaviour
     public void InitBuff(BuffType buffType,float duration,float value,float interval)
     {
         bufftype = buffType;
+        
+        if (buffType == BuffType.BeatBack || buffType == BuffType.BeatUp || buffType == BuffType.Pull)
+            duration = 2f;
+        
         durationTime = duration;
         this.value = value;
         this.interval = interval;
+        curTime = 0;
     }
 
     public void Reset()
@@ -35,6 +41,7 @@ public class BuffRun : MonoBehaviour
 
     void Start()
     {
+        curTime = 0;
         target = GetComponent<CharacterStatus>();
         StartCoroutine(ExcuteDamage());
     }
@@ -42,6 +49,9 @@ public class BuffRun : MonoBehaviour
     private void Update()
     {
         curTime += Time.deltaTime;
+        
+        if(curTime > durationTime)
+            Destroy(this);
     }
 
     private IEnumerator ExcuteDamage()

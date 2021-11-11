@@ -52,7 +52,7 @@ public class BuffIcon : MonoBehaviour
 
     public void Refresh()
     {
-        Debug.Log("已有buff刷新持续时间");
+        //Debug.Log("已有buff刷新持续时间");
         curTime = 0;
     }
 }

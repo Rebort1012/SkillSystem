@@ -73,9 +73,14 @@ public class CharacterSkillSystem : MonoBehaviour
                         foreach (var buff in currentUseSkill.skill.buffType)
                         {
                             //加bufficon
-                            GameObject uiPortrait = selectStatus.uiPortrait.gameObject;
-                            uiPortrait.SetActive(true);
-                            uiPortrait.transform.SetAsLastSibling();
+                            //英雄不需要隐藏
+                            if (!selectedTaget.CompareTag("Player"))
+                            {
+                                MonsterMgr.I.HideAllEnemyPortraits();
+                                selectStatus.uiPortrait.ShowPortrait();
+                            }
+
+                            //uiPortrait.transform.SetAsLastSibling();
                             selectStatus.uiPortrait.AddBuffIcon(buff, currentUseSkill.skill.buffDuration);
 
                             //已有该buff刷新
@@ -99,6 +104,7 @@ public class CharacterSkillSystem : MonoBehaviour
                             buffRun.InitBuff(buff, currentUseSkill.skill.buffDuration,
                                 currentUseSkill.skill.buffValue, currentUseSkill.skill.buffInterval);
                         }
+						return;
                     }
 
                     //转向目标

@@ -17,8 +17,15 @@ public class UIPortrait : MonoBehaviour
 
     private List<GameObject> buffItems = new List<GameObject>();
     private float curTime;
+    private Vector2 defaultPos;
+    private Vector2 hidePos = new Vector2(1600,444);
+    
     void Start()
     {
+        defaultPos = GetComponent<RectTransform>().anchoredPosition;
+        if (gameObject.name != "UIHeroPortrait")
+            GetComponent<RectTransform>().anchoredPosition = hidePos;
+        
         silderHP.maxValue = 1;
         silderMP.maxValue = 1;
     }
@@ -34,9 +41,10 @@ public class UIPortrait : MonoBehaviour
             return;
         
         curTime += Time.deltaTime;
+        
         if (curTime > 40.0f)
         {
-            gameObject.SetActive(false);
+            GetComponent<RectTransform>().anchoredPosition = hidePos;
         }
     }
     
@@ -48,6 +56,7 @@ public class UIPortrait : MonoBehaviour
  
     public void AddBuffIcon(BuffType buffType,float druation)
     {
+        curTime = 0;
         BuffIcon curBuff = null;
         foreach (var item in buffItems)
         {
@@ -69,7 +78,6 @@ public class UIPortrait : MonoBehaviour
         buffItems.Add(go);
         curBuff = go.GetComponent<BuffIcon>();
         curBuff.LoadIcon(buffType, druation);
-        
     }
 
     private GameObject GetChild()
@@ -90,5 +98,10 @@ public class UIPortrait : MonoBehaviour
     public void Reset()
     {
         curTime = 0;
+    }
+
+    public void ShowPortrait()
+    {
+        GetComponent<RectTransform>().anchoredPosition = defaultPos;
     }
 }

@@ -45,7 +45,8 @@ public class CharacterStatus : MonoBehaviour
         {
             Transform canvas = GameObject.FindGameObjectWithTag("Canvas").transform;
             uiPortrait = Instantiate(Resources.Load<GameObject>("UIEnemyPortrait"), canvas).GetComponent<UIPortrait>();
-            uiPortrait.gameObject.SetActive(false);
+            //存储所有的uiPortarit在单例中
+            MonsterMgr.I.AddEnemyPortraits(uiPortrait);
         }
         uiPortrait.cstatus = this;
         uiPortrait.RefreshHpMp();
@@ -73,8 +74,8 @@ public class CharacterStatus : MonoBehaviour
         //ApplyUI画像
         if (!isBuff)
         {
-            uiPortrait.gameObject.SetActive(true);
-            uiPortrait.transform.SetAsLastSibling();
+            uiPortrait.ShowPortrait();
+            //uiPortrait.transform.SetAsLastSibling();
             uiPortrait.RefreshHpMp();
         }
     }

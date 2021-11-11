@@ -5972,8 +5972,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 100
   MaxHP: 100
-  SP: 100
-  MaxSP: 100
+  SP: 111111
+  MaxSP: 111111
   damage: 100
   hitRate: 1
   dodgeRate: 1
@@ -6043,7 +6043,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7601797847384421751}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 16.92}
+  m_LocalPosition: {x: 4.8, y: 0, z: 4.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5047480194410959857}

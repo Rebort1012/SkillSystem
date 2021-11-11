@@ -17,6 +17,7 @@ public class LineAttackSelector : IAttackSelector
         array = CollectionHelper.FindAll<GameObject>(array,
             p => Array.IndexOf(attTags, p.tag) >= 0
                  && p.GetComponent<CharacterStatus>().HP > 0 &&
+                 //待修改，特效forward和两者相减向量的夹角，两者间的距离，三角函数求长方形宽高；
                  Mathf.Abs(p.transform.position.z - skillTransform.position.z) < skillData.skill.attackDisntance &&
                  Mathf.Abs(p.transform.position.x - skillTransform.position.x) < skillData.skill.attackWidth / 2);
 

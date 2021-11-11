@@ -27,7 +27,7 @@ MonoBehaviour:
     costSP: 13
     attackDisntance: 11
     attackWidth: 8
-    attackAngle: 180
+    attackAngle: 100
     fxOffset: 0
     attckTargetTags:
     - Enemy

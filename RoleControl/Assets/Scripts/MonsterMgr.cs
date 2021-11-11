@@ -23,6 +23,11 @@ public class MonsterMgr
     {
         allEnemyPortraits.Add(uiPortrait);
     }
+    
+    public void RemoveEnemyPortraits(UIPortrait uiPortrait)
+    {
+        allEnemyPortraits.Remove(uiPortrait);
+    }
 
     public void HideAllEnemyPortraits()
     {
@@ -31,5 +36,4 @@ public class MonsterMgr
             it.GetComponent<RectTransform>().anchoredPosition = hidePos;
         }
     }
-
 }

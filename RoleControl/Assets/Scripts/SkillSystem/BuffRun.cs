@@ -126,4 +126,12 @@ public class BuffRun : MonoBehaviour
     {
         return durationTime - curTime;
     }
+    
+    private void OnDisable()
+    {
+        if (bufftype == BuffType.Slow)
+            ;
+        else if (bufftype == BuffType.AddDefence)
+            target.defence -= value;
+    }
 }

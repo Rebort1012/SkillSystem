@@ -104,7 +104,6 @@ public class CharacterSkillSystem : MonoBehaviour
                             buffRun.InitBuff(buff, currentUseSkill.skill.buffDuration,
                                 currentUseSkill.skill.buffValue, currentUseSkill.skill.buffInterval);
                         }
-						return;
                     }
 
                     //转向目标

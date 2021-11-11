@@ -5972,8 +5972,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 100
   MaxHP: 100
-  SP: 111111
-  MaxSP: 111111
+  SP: 1111
+  MaxSP: 1111
   damage: 100
   hitRate: 1
   dodgeRate: 1

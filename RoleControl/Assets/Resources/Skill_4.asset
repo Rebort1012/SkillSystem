@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f752f98a1e914bf419562fdf4ac0603b, type: 3}
+  m_Name: Skill_4
+  m_EditorClassIdentifier: 
+  skill:
+    skillID: 4
+    skillIcon: 4
+    description: 4
+    name: "\u76FE\u5B88"
+    damageType: 0
+    durationTime: 0
+    damageInterval: 0
+    attackNum: 1
+    damageRatio: 1
+    damage: 200
+    coolTime: 34
+    costSP: 14
+    attackDisntance: 0
+    attackWidth: 0
+    attackAngle: 0
+    fxOffset: 0
+    attckTargetTags:
+    - Player
+    animtionName: Attack
+    delayAnimaTime: 0
+    prefabName: 
+    hitFxName: 
+    nextBatterId: 0
+    buffType: 0002000000040000
+    buffDuration: 30
+    buffInterval: 30
+    buffValue: 100
+  damageType: 2000000000200000

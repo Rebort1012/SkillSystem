@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f752f98a1e914bf419562fdf4ac0603b, type: 3}
+  m_Name: Skill_1
+  m_EditorClassIdentifier: 
+  skill:
+    skillID: 1
+    skillIcon: 1
+    description: "\u6280\u80FD1"
+    name: "\u706B\u7403"
+    damageType: 0
+    durationTime: 5
+    damageInterval: 5
+    attackNum: 1
+    damageRatio: 0.4
+    damage: 100
+    coolTime: 1
+    costSP: 0
+    attackDisntance: 0
+    attackWidth: 0
+    attackAngle: 0
+    fxOffset: 0
+    attckTargetTags:
+    - Enemy
+    animtionName: Attack
+    delayAnimaTime: 0.4
+    prefabName: Skill_2_Fly
+    hitFxName: Skill_2_Hit
+    nextBatterId: 0
+    buffType: 02000000
+    buffDuration: 7
+    buffInterval: 2
+    buffValue: 30
+  damageType: 8000000004000000
